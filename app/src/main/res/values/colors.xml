@@ -18,9 +18,4 @@
     <color name="genre_title_color">#FFFFFFFF</color>
     <color name="bg_color">#00000000</color>
     <color name="btn_text_color">#FFFFFFFF</color>
-    <color name="genra_spinner_bg_color">#424242</color>
-    <color name="tooltips_title_color">#FF000000</color>
-    <color name="tooltips_details_color">#8A000000</color>
-    <color name="tooltips_bg_color">#FFFAFAFA</color>
-    <color name="tooltips_divider_color">#1f000000</color>
 </resources>
