@@ -16,6 +16,7 @@
     </style>
 
     <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon" > @drawable/ic_menu_search</item>
     <!--
     Background for the search query section (e.g. EditText)
     <item name="queryBackground">...</item>

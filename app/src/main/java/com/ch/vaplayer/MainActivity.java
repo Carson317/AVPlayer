@@ -17,44 +17,78 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    //save our header or result
+    private Drawer result = null;
+    private Toolbar mToolbar = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Handle Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle(R.string.drawer_item_video);
+        setSupportActionBar(mToolbar);
 
-        VALogger.Info("onCreate()");
+        VALogger.Info("************");
         //new DrawerBuilder().withActivity(this).build();
         //if you want to update the items at a later time it is recommended to keep it in a variable
-        PrimaryDrawerItem itemVideo = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_item_video).withIcon(R.drawable.abc);
-        PrimaryDrawerItem itemAudio = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_audio);
-        SecondaryDrawerItem item2 = (SecondaryDrawerItem) new SecondaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_settings);
-
+        PrimaryDrawerItem itemVideo = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_item_video).withIcon(R.drawable.ic_menu_video);
+        PrimaryDrawerItem itemAudio = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_audio).withIcon(R.drawable.ic_menu_audio);
+        SecondaryDrawerItem itemSettings = (SecondaryDrawerItem) new SecondaryDrawerItem().withIdentifier(3).withName(R.string.drawer_item_settings).withIcon(R.drawable.ic_menu_preferences);
+        SecondaryDrawerItem itemHelp = (SecondaryDrawerItem) new SecondaryDrawerItem().withIdentifier(4).withName(R.string.drawer_item_help).withIcon(R.drawable.ic_menu_help);
         //create the drawer and remember the `Drawer` result object
-        Drawer result = new DrawerBuilder()
-                .withActivity(this)
+        result = new DrawerBuilder(this)
+                .withRootView(R.id.drawer_container)
+                .withToolbar(mToolbar)
+                .withDisplayBelowStatusBar(false)
+                .withActionBarDrawerToggleAnimated(true)
                 .addDrawerItems(
                         itemVideo,
                         itemAudio,
                         new DividerDrawerItem(),
-                        item2,
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_settings)
-                ).withSavedInstance(savedInstanceState)
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                        itemSettings,
+                        itemHelp
+                ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         // do something with the clicked item :D
+                        if(drawerItem != null){
+                            if(drawerItem.getIdentifier() == 1){
+                                showVideo();
+                            }else if(drawerItem.getIdentifier() == 2){
+                                showAudio();
+                            }else if(drawerItem.getIdentifier() == 3){
+                                showSettings();
+                            }else if(drawerItem.getIdentifier() == 4){
+                                showHelp();
+                            }
+                        }
                         return false;
                     }
-                }).build();
+                }).withSavedInstance(savedInstanceState)
+                .build();
         //set the selection to the item with the identifier 1
-        result.setSelection(1);
+        //result.setSelection(1);
          //set the selection to the item with the identifier 2
-        result.setSelection(item2);
+        //result.setSelection(item2);
          //set the selection and also fire the `onItemClick`-listener
-        result.setSelection(1, true);
+        //result.setSelection(1, true);
+    }
+    private void showHelp(){
+        getSupportActionBar().setTitle(R.string.drawer_item_help);
+    }
+
+    private void showSettings(){
+        getSupportActionBar().setTitle(R.string.drawer_item_settings);
+    }
+    private void showAudio() {
+        getSupportActionBar().setTitle(R.string.drawer_item_audio);
+    }
+
+    private void showVideo() {
+        getSupportActionBar().setTitle(R.string.drawer_item_video);
     }
 
     @Override
@@ -71,12 +105,27 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.action_search:
-            case R.id.action_share:
             case R.id.action_refresh:
-            case R.id.action_settings:
+            case R.id.action_about:
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState = result.saveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (result != null && result.isDrawerOpen()) {
+            result.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
