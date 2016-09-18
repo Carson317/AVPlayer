@@ -45,7 +45,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class MainActivity extends AppCompatActivity {
+public class VideoActivity extends AppCompatActivity {
 
     private ListView mVideoListView;
     private ListViewAdapter mVideoListAdapter;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar = null;
 
     private static final int  CODE_FOR_WRITE_PERMISSION = 1;
-    private static final String WRITE_PERMISSION = "Manifest.permission.WRITE_EXTERNAL_STORAGE";
+    private static final String WRITE_PERMISSION = "Manifest.permission.READ_EXTERNAL_STORAGE";
     private PermissionHelper mPermissionHelper;
 
     @Override

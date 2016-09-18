@@ -1,4 +1,4 @@
-package com.ch.utils;
+package com.ch.vaplayer.utils;
 
 import android.util.Log;
 
@@ -7,22 +7,29 @@ import android.util.Log;
  */
 public class VALogger {
     private static String TAG = "VALogger-CH";
-    public VALogger(){
+
+    public VALogger() {
 
     }
-    public static void Info(String strMsg){
+
+    public static void Info(String strMsg) {
         Log.i(TAG, getFunctionName() + strMsg);
     }
 
-    public static void Error(String strMsg){
-        Log.e(TAG,Log.getStackTraceString(new Exception()).toString() + strMsg);
+    public static void Error(String strMsg) {
+        Log.e(TAG, Log.getStackTraceString(new Exception()).toString() + strMsg);
     }
 
-    public static void Warning(String strMsg){
+    public static void Warning(String strMsg) {
         Log.w(TAG, getFunctionName() + strMsg);
     }
-    public static void Debug(String strMsg){
+
+    public static void Debug(String strMsg) {
         Log.d(TAG, getFunctionName() + strMsg);
+    }
+
+    public static void Debug(String name,int intMsg) {
+        Log.d(TAG, getFunctionName() + " " + name + ":" + intMsg);
     }
 
     private static String getFunctionName() {
